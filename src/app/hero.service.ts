@@ -7,11 +7,11 @@ import { catchError, map, tap } from 'rxjs/operators';
 import { Hero } from './hero';
 import { HEROES } from './mock-heroes';
 import { MessageService } from './message.service';
- 
+
 @Injectable({providedIn: 'root'})
 export class HeroService {
-  
-  private heroesUrl = 'api/heroes'
+
+  private heroesUrl = 'api/heroes';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json'})
@@ -28,7 +28,7 @@ export class HeroService {
     .pipe(
       tap(_ => this.log('fetched heroes')),
       catchError(this.handleError<Hero[]>('getHeroes', []))
-    )
+    );
   }
 
   /** GET hero by id. Will 404 if id not found */
@@ -45,7 +45,7 @@ export class HeroService {
     return this.http.put(this.heroesUrl, hero, this.httpOptions).pipe(
       tap(_ => this.log(`updated hero id=${hero.id}`)),
       catchError(this.handleError<any>('updatedHero'))
-    )
+    );
   }
 
   // POST: add a new hero to the server
